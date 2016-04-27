@@ -55,11 +55,311 @@ Exports to a CSV file that looks like this:
 
 ## The Largest Order
 
-Before you process the large file of orders to find the largest order, you wanted to make sure your program works. In a separate spreadshet you copy 10 orders down. Reviewing the orders you can easiliy see that the Boy Who Lived Fan Club order is the largest.
+Before you process the large file of orders to find the largest order, you wanted to make sure your program works. In a separate spreadshet you copy 10 orders down. Reviewing the orders you can easiliy see that the COMPANY NAME order is the largest.
 
 Now time to write your ruby program.
 
-RUBY PROGRAM TO FIND LARGEST ORDER
+Let's create a new file and call our ruby script `find_largest_order.rb`.
+
+The CSV file we will be reading can be found here [LINK TO CSV]. Be sure to place the CSV file in your project's folder.
+
+Our project's folder directory should look like:
+
+```
+/
+  find_largest_order.rb
+  orders.csv
+```
+
+Now its time to code some Ruby to read the csv file and place its contents in a variable. We can call this variable anything, but naming it `text` communicates its purpose to future developers reading this program.
+
+```
+# Read the csv file and place the contents into text
+file = File.open("orders.csv")
+text = file.read
+```
+
+Lets output the value of `text` to the console. 
+
+```
+# Read the csv file and place the contents into text
+file = File.open("orders.csv")
+text = file.read
+puts text
+```
+
+We should see the contents of the `text` variable. It should look like the following.
+
+```
+"Gilberto Jenkins,(645) 814-8873,8250 Kade Club Stiedemannburgh WA 20027,Prince,Small,401,2016-06-08 00:18:44 -0500\nMiss Corene Sauer,(605) 323-4358,788 Terrell River Lake Reuben GA 77383-1492,Harry Potter,Small,69,2016-06-05 12:15:08 -0500\n ....
+```
+
+Notice the values are separated by commas (remember CSV stands for Comma Separated Values). The other important part of this file might be hard to see at first. Look through the output for `\n`s. Computers deal with compact streams of data meaning they don't care about whitespace or readability. `\n` is the fancy character meaning new line.
+
+So if you had a file that contained:
+
+```
+What the hell
+is a new line
+character
+```
+
+It would be read in as:
+
+```
+What the hell\nis a new line\ncharacter
+```
+
+The `\n` new line character is what allows us to be able to read the file line by line.
+
+```
+# read each order line by line
+text.each_line do |line|
+  puts line
+end
+```
+
+Each order should come back as a line in the file.
+
+```
+Gilberto Jenkins,(645) 814-8873,8250 Kade Club Stiedemannburgh WA 20027,Prince,Small,401,2016-06-08 00:18:44 -0500
+```
+
+Right now this line is just a large string. We want to be able to access the different parts of the order independently. In order to do this, we need to `split` the values on a comma.
+
+Split works by converting a string into an array of values splitting the values by the string paramter.
+
+```
+$ irb
+> "Split,is,neat".split(",")
+=> ["Split", "is", "neat"]
+> "WorksRUBYwithRUBYwithoutRUBYcommas".split("RUBY")
+=> ["Works", "with", "without", "commas"] 
+```
+
+Back to our `find_largest_order.rb` program.
+
+```
+# Read the csv file and place the contents into text
+file = File.open("orders.csv")
+text = file.read
+
+# read each order line by line
+text.each_line do |line|
+  # split line by comma to get order values in an array
+  order = line.split(",")
+  puts order
+end
+```
+
+When we run our Ruby program now we should see the orders in the console as arrays of values.
+
+```
+["Gilberto Jenkins", "(645) 814-8873", "8250 Kade Club Stiedemannburgh WA 20027", "Prince", "Small", "401", "2016-06-08 00:18:44 -0500\n"]
+...
+```
+
+Oh look... Mr `\n` is there in our data. We don't want that added to the end of every shipping date. Lets remove the `\n` from our data.
+
+We can remove characters from a string using `gsub`.
+
+```
+$ irb
+> "Hello World".gsub("Hello", "Hi")
+=> "Hi World"
+> "Get rid of that new line \ninterloper\n".gsub("\n", "")
+=> "Get rid of that new line interloper" 
+```
+
+Back in our `find_largest_order.rb` program, we can replace the `\n` in our order using `gsub` before we use `split`.
+
+```
+# read each order line by line
+text.each_line do |line|
+  # replace the new line character with nothing
+  line = line.gsub("\n", "")
+  # split line by comma to get order values in an array
+  order = line.split(",")
+  puts order
+end
+```
+
+Now our orders should look like:
+
+```
+["Gilberto Jenkins", "(645) 814-8873", "8250 Kade Club Stiedemannburgh WA 20027", "Prince", "Small", "401", "2016-06-08 00:18:44 -0500"]
+...
+```
+
+We need to now find the order amount for each order. The order array always has the values in the same order. Recall that the columns in our spreadsheet were: Customer Name, Phone Number, Shipping Address, Shirt Name, Shirt Size, Order Amount, Shipping Date. Since arrays in Ruby start at index 0, we can identify where each column's data is in each order row by writing down the index and the column name in order.
+
+```
+# customer name - 0
+# phone number - 1
+# shipping address - 2
+# shirt name - 3
+# shirt size - 4
+# order amount - 5
+# shipping date - 6
+order_amount = order[5]
+```
+
+Now we can update our program to print all the order amounts.
+
+```
+# Read the csv file and place the contents into text
+file = File.open("orders.csv")
+text = file.read
+
+# read each order line by line
+text.each_line do |line|
+  # replace the new line character with nothing
+  line = line.gsub("\n", "")
+  # split line by comma to get order values in an array
+  order = line.split(",")
+  # customer name - 0
+  # phone number - 1
+  # shipping address - 2
+  # shirt name - 3
+  # shirt size - 4
+  # order amount - 5
+  # shipping date - 6
+  customer_name = order[0]
+  order_amount = order[5]
+  puts "#{customer_name} - #{order_amount}"
+end
+```
+
+When we run the program, we can see the orders with the customer name and order amount.
+
+```
+Gilberto Jenkins - 401
+Miss Corene Sauer - 69
+Avis Keebler MD - 89
+Loyal Fay - 350
+Emely Nienow Jr. - 460
+Dr. Ana Rogahn - 388
+Reuben Corwin V - 367
+Breanna Funk - 127
+Will Morissette - 489
+Darrel Morar - 41
+```
+
+We accomplished the first big step, reading the file and accessing the order data. Our next task is to add logic to identify the order with the largest amount.
+
+We first need a variable to keep track of the largest order we have found so far. We also need a variable to keep track of the largest order amount. We will start the largest order amount at 0.
+
+```
+# Read the csv file and place the contents into text
+file = File.open("orders.csv")
+text = file.read
+
+# start the largest order as empty and amount at 0
+largest_order = nil
+largest_order_amount = 0
+
+# read each order line by line
+text.each_line do |line|
+...
+end
+```
+
+Now lets think how we want the logic to work. Every order we want to check if the order amount is greater than the current largest order amount. If the order amount is greater than the largest order amount, then we want to make that order the new largest order. Following this pattern (or algorithm) we should be able to identify the largest order after we go through each order.
+
+```
+# Read the csv file and place the contents into text
+file = File.open("orders.csv")
+text = file.read
+
+# start the largest order as empty and amount at 0
+largest_order = nil
+largest_order_amount = 0
+
+# read each order line by line
+text.each_line do |line|
+  # replace the new line character with nothing
+  line = line.gsub("\n", "")
+  # split line by comma to get order values in an array
+  order = line.split(",")
+  # customer name - 0
+  # phone number - 1
+  # shipping address - 2
+  # shirt name - 3
+  # shirt size - 4
+  # order amount - 5
+  # shipping date - 6
+  order_amount = order[5]
+
+  if order_amount > largest_order_amount
+    largest_order = order
+    largest_order_amount = order_amount
+  end
+end
+
+# print the results
+puts "The Largest Order is from #{largest_order[0]}"
+puts "The Largest Order amount is #{largest_order[5]}"
+```
+Lets see if that works.
+
+Oh no! We got an error.
+
+```
+`>': comparison of String with 0 failed (ArgumentError)
+```
+
+What is happening is the order amount we read from the file isn't a number. It is actually a string. `234` is not the same thing in Ruby as `"234"`. So when we tried to compare `"401"` to `0` using `>`, Ruby couldn't do it so threw an error. What we need to do is convert `"401"` to `401`. We can convert a string to an integer using the `to_i` method.
+
+```
+$ irb
+> "401".to_i
+401
+```
+
+Lets update our code to convert the order amount.
+
+```
+# Read the csv file and place the contents into text
+file = File.open("orders.csv")
+text = file.read
+
+# start the largest order as empty and amount at 0
+largest_order = nil
+largest_order_amount = 0
+
+# read each order line by line
+text.each_line do |line|
+  # replace the new line character with nothing
+  line = line.gsub("\n", "")
+  # split line by comma to get order values in an array
+  order = line.split(",")
+  # customer name - 0
+  # phone number - 1
+  # shipping address - 2
+  # shirt name - 3
+  # shirt size - 4
+  # order amount - 5
+  # shipping date - 6
+  order_amount = order[5].to_i
+
+  if order_amount > largest_order_amount
+    largest_order = order
+    largest_order_amount = order_amount
+  end
+end
+
+puts "The Largest Order is from #{largest_order[0]}"
+puts "The Largest Order amount is #{largest_order[5]}"
+
+```
+
+And with our final logic in place, we run our Ruby program and see our results.
+
+```
+$ ruby find_largest_order.rb 
+The Largest Order is from Will Morissette
+The Largest Order amount is 489
+```
 
 Woot! It works! Please enjoy your Dr. Frankenstein moment. Let your inner mad scientist out for a bit.
 
