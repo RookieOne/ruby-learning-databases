@@ -30,10 +30,10 @@ def generate_order
   phone_number = generate_phone_number
   shipping_address = generate_address
   shirt_name = generate_shirt_name
-  shirt_size = generate_shirt_size
+  # shirt_size = generate_shirt_size
   order_amount = Faker::Number.between(1, 500)
-  shipping_date = Faker::Time.between(DateTime.now, DateTime.now + 50)
-  [customer_name, phone_number, shipping_address, shirt_name, shirt_size, order_amount, shipping_date]
+  # shipping_date = Faker::Time.between(DateTime.now, DateTime.now + 50)
+  [customer_name, phone_number, shirt_name, order_amount]
 end
 
 file = File.new(filename, "w+")

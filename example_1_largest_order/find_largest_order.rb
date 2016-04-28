@@ -2,6 +2,9 @@
 file = File.open("orders.csv")
 text = file.read
 
+name = gets
+p name
+
 # start the largest order as empty and amount at 0
 largest_order = nil
 largest_order_amount = 0
@@ -14,12 +17,9 @@ text.each_line do |line|
   order = line.split(",")
   # customer name - 0
   # phone number - 1
-  # shipping address - 2
-  # shirt name - 3
-  # shirt size - 4
-  # order amount - 5
-  # shipping date - 6
-  order_amount = order[5].to_i
+  # shirt name - 2
+  # order amount - 3
+  order_amount = order[3].to_i
 
   if order_amount > largest_order_amount
     largest_order = order
@@ -28,4 +28,4 @@ text.each_line do |line|
 end
 
 puts "The Largest Order is from #{largest_order[0]}"
-puts "The Largest Order amount is #{largest_order[5]}"
+puts "The Largest Order amount is #{largest_order[3]}"
