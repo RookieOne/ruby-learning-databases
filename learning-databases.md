@@ -3,7 +3,9 @@ Introduction to CSVs and File Databases
 
 # Introduction
 
-The original computer programs couldn't store any data. They could only provide immediate computation based on the data passed in much like simple calculators. There quickly became a need to be able to store data for a computer to process at a later date. The first method to solve this problem was to write data down in computer files. Programs could then access the files, do computations, process transtions, and generate reports.
+The original computer programs couldn't store any data. These monolithic monsters the size of rooms could only provide immediate computation based on the data passed in much like simple calculators. There quickly became a need to be able to store data for a computer to process at a later date. At first this was done through the use of punch cards (think Scantrons). As the data being collected grew, this method became unwieldy. Who wants to keep track of boxes of cards?
+
+Computers soon had tape drives and hard drives allowing them to write data down into digital files. Programs could then access these files, do computations, and generate reports.
 
 Lets explore how that worked and how we can use Ruby to process files to help run a business.
 
@@ -21,13 +23,13 @@ Her previous record keeping was on a sheet of paper (and sometimes scraps of pap
 
 First thing you decide is that this analog paper recording keeping has to go. Instead of writing orders down on paper, you use a spreadsheet on your computer.
 
-So across the top you write the type of information you will record for each order. Each of these are the columns in your spreadsheet.
+Across the top you write the type of information you will record for each order. Each of these are the columns in your spreadsheet.
 
-<Picture of Spreadsheet with columns>
+### Picture of Spreadsheet with columns
 
 Then as you answer the phone to receive orders or Danielle hands you notes from sales she made, you enter the information into the spreadsheet. Each order you write is a row in your spreadsheet.
 
-<Picture of Spreadsheet with some rows>
+### Picture of Spreadsheet with some rows
 
 When an order ships, you go back to your spreadsheet and enter 'Yes' at the end of the row under a column you made called Shipped.
 
@@ -41,17 +43,17 @@ One Friday afternoon after the last order was shipped, Danielle and you were sit
 
 You wanted to suprise Danelle and have that information for her on Monday. That weekend you decided that since you have been learning Ruby, maybe you can use Ruby to get her that information.
 
-While Ruby can read spreadsheets, like many other programming languages it is easier for Ruby to read CSVs.
+While Ruby can read spreadsheets, like many other programming languages it is easier for Ruby to read files in a CSV format.
 
 CSV stands for Comma Separate Values. A CSV file has data stored in rows whose columns are separated by commas.
 
 A spreadsheet like this:
 
-<Picture of Spreadsheet>
+### Picture of Spreadsheet
 
 Exports to a CSV file that looks like this:
 
-<Picture of CSV file>
+### Picture of CSV file
 
 ## The Largest Order
 
