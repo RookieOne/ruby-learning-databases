@@ -3,17 +3,17 @@ Introduction to CSVs and File Databases
 
 # A bit about the audience
 
-In general, the audience will have had no or little programming experience before starting the curriculum. They would have already been taught the basics of Ruby style programming, looping, and how blocks are used. The audience will also have become comfortable with defining classes, methods, and instantiating instances of those classes.
+In general, the audience will have had little to no programming experience before starting the curriculum. They will have already been taught the basics of Ruby style programming, looping, and how blocks are used. The audience will also have become comfortable with defining classes, methods, and instantiating instances of those classes.
 
 # Introduction to CSVs
 
-The original computer programs couldn't store any data. These monolithic monsters the size of rooms could only provide immediate computation based on the data passed. Rooms of machines with the capabilities of simple handheld calculators. 
+The original computers couldn't store any data. These monolithic monsters the size of rooms could only provide immediate computation based on the data passed. Rooms of machines with the capabilities of simple handheld calculators. 
 
 There quickly became a need to be able to store data for a computer to process at a later date. At first this was done through the use of punch cards (think Scantrons). As the data being collected grew, this method became unwieldy. Who wants to keep track of boxes of cards?
 
-Necessity is the mother of invention so computers soon had tape and hard drives allowing them to write data down into digital files. Programs could then access these files, do computations, and generate reports.
+Necessity is the mother of invention, so computers soon had tape and hard drives allowing them to write data down into digital files. Programs could then access these files, do computations, and generate reports.
 
-Lets explore how that worked and how we can use Ruby to process files to help run a business.
+Let's explore how that worked and how we can use Ruby to process files to help run a business.
 
 ## The Problem
 
@@ -51,9 +51,9 @@ This system works great! Danielle is happy because she has less paperwork, and t
 
 Months go by, and everything runs like clockwork. Orders come in. T-shirts ship out. Business is booming.
 
-One Friday afternoon after the last order was shipped, Danielle and you were sitting back drinking some beer and chatting about how great things have been. Danielle was feeling thankful for the business and wanted to give back to her customers. She wanted write a thank you to the customer with the largest order.
+One Friday afternoon after the last order was shipped, Danielle and you were sitting back drinking some beer and chatting about how great things have been. Danielle was feeling thankful for the success of her business and decided to reward the customer with the largest order with a discount on a future order.
 
-That weekend you decided that since you have been learning Ruby, maybe you can use that new skill to get her that information.
+That weekend you decided that since you have been learning Ruby, maybe you can use that new skill to find the largest order for her.
 
 While Ruby can read spreadsheets, like many other programming languages, it is easier to read files in a CSV format.
 
@@ -75,7 +75,7 @@ Exports to a CSV file that looks like this:
 Andy Lakin,(565) 521-2561,Star Wars,201
 ```
 
-As you would expect, each of the values is separated by commas. Would be weird if that wasn't true right? CSVs are simple and widely used as a common format for passing data between programs.
+As you would expect, each of the values is separated by commas. Would be weird if that wasn't true, right? Because CSVs are so simple, they are commonly used as a way to pass data between different computer programs.
 
 ## Finding the Largest Order
 
@@ -114,7 +114,7 @@ Its a good idea to think about what the program should do before you write any c
 * Print the largest order
 ```
 
-Now with since you know what the program should do it is time to write your Ruby program.
+Since you now know what the program should do it is time to write your Ruby program.
 
 ### Step 1: Read the CSV File
 
@@ -125,7 +125,7 @@ To read the CSV file, you need to first open the file.
 file = File.open("orders.csv")
 ```
 
-Then you need to read the contents of the file and place it in a variable you can work with. You can call this variable anything, but naming it `text` communicates its purpose to future developers. That future developer could be you! Weeks or months from now, you might not remember what you were thinking when writing this program so having a program that is easy to read and understand helps. Ruby helps with this by being easy to read.
+Then you need to read the contents of the file and place it in a variable you can work with. You can call this variable anything, but naming it `text` communicates its purpose to future developers. That future developer could be you! Weeks or months from now, you might not remember what you were thinking when writing this program so having a program that is easy to read and understand helps. Ruby helps with this because it is so easy to read.
 
 ```
 # Read the csv file and place the contents into text
@@ -148,9 +148,11 @@ We should see the contents of the `text` variable. It should look like the follo
 "Kristopher Prosacco DDS,(687) 165-7038,Prince,487\nAndy Lakin,(565) 521-2561,Star Wars,201\nRuben Okuneva,(137) 848-3643,Prince,53\nMr. Haleigh Wyman,(797) 395-1377,Harry Potter,128\n ....
 ```
 
-Notice the values are separated by commas (remember CSV stands for Comma Separated Values). The other important part of this file might be hard to see at first. Look through the output for `\n`s. Computers deal with compact streams of data meaning they don't care about whitespace or readability. Remember computer's used to read data from large tapes. That is a good metaphor to use when thinking about how a computer reads data. You can also think of it as a stream. In fact the term `stream` is used in many languages to refer to reading a file.
+Notice the values are separated by commas (remember CSV stands for Comma Separated Values). The other important part of this file might be hard to see at first. Look through the output for `\n`s. 
 
-If you have a stream of characters, how would you know what is a space versus when to display the data on a new line? For computers, they made a character, `\n`, that tells the computer to go to a new line.
+Computers deal with compact streams of data meaning they don't care about whitespace or readability. Remember computer's used to read data from large tapes. That is a good metaphor to use when thinking about how a computer reads data. You can also think of it as a stream. In fact the term `stream` is used in many languages to refer to reading a file.
+
+If you have a stream of characters, how would you know what is a space versus when to display the data on a new line? For computers, they made up a new character, `\n`, that tells the computer to go to a new line.
 
 So, if you had a file that contained:
 
@@ -511,14 +513,10 @@ HINT 2: Instead of using `gsub` to remove the new line character (`\n`), you can
 
 # Conclusion
 
-Think about how you had to find an order. We had to load the entire record into memory and go through each record to find the exact one we wanted. In order to generate a report to sum all orders for a given shirt name, we had to go through each record to find the value to add. While this worked, as our database increases in size this operation would become slower and slower.
+Think about how you had to find an order. We had to load the entire record into memory and go through each record to find the exact one we wanted. In order to generate a report to sum all orders for a given shirt name, we had to go through each record to find the value to add. While this worked, as our file increased in size this operation would become slower and slower.
 
 Welcome to computer databases in 1970s-1980s. Databases were often stored as flat files. Instead of comma separated values, values were often regulated to specific positions in the file. So the customer name was from column(5..11). Programming languages such as COBOL were developed that excelled in processing these files. Many business processes still work this way (particularly in finance and banking).
 
-<Picture of COBOL>
-
 To generate reports or find information, the entire file would be have to be processed. These files could be millions of lines long. Imagine trying process all the accounting transactions for Visa for a day, for a month or even for a year. Companies needed large mainframes to generate simple reports and those reports would take many hours to process.
-
-<Picture of old server room>
 
 This was the problem facing the world of computers. How can we make working with data better, faster, and easier? Computers keep getting faster and faster, but is there another way to speed up data processing? The answer was yes. The solution is known as Relational Databases. This is the type of database that we use in Rails and is what we will cover in the next section.
